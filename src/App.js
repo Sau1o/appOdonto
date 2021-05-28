@@ -1,43 +1,46 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {RadioButton, Button} from 'react-native-paper';
+
+import firestore from '@react-native-firebase/firestore';
 
 const App = () => {
   const [value, setValue] = useState('');
   //const [pontos, setPontos] = useState(0);
   const [i, setI] = useState(0);
+  const [question, setQuestion] = useState('');
+  const [a, setA] = useState('');
+  const [b, setB] = useState('');
+  const [c, setC] = useState('');
+  const [d, setD] = useState('');
+  const [e, setE] = useState('');
+  const [certa, setCerta] = useState('');
 
-  const data = [
-    {
-      pergunta:
-        'Os alimentos ricos em fibras regularizam o funcionamento do intestino. Indique o item cujo alimento contém mais fibra.',
-      resposta: [
-        'refrigerante',
-        'Pastel de carne',
-        'batata frita',
-        'dogão',
-        'legumes assados',
-      ],
-      certa: 'e',
-    },
-    {
-      pergunta: 'O que é Ortorexia.',
-      resposta: [
-        'Obsessão pelo consumo de alimentos saudáveis',
-        'Transtorno alimentar caracterizado pela perda de apetite',
-        'Obsessão em falar de forma correta',
-        'Preocupação exagerada em ter um corpo elegante',
-        'Distúrbiovalimentar que provoca a vingestão excessiva de alimentos',
-      ],
-      certa: 'a',
-    },
-  ];
-
-  //console.log(data);
+  useEffect(() => {
+    const loadQuiz = async () => {
+      const users = await firestore().collection('quiz').get();
+      const user = {...users.docs[i].data()};
+      //console.log(user);
+      setValue('');
+      setCerta('');
+      setQuestion(user.q);
+      setA(user.a);
+      setB(user.b);
+      setC(user.c);
+      setD(user.d);
+      setE(user.e);
+      setCerta(user.certa);
+      //console.log(user.certa);
+      //const users = await firestore().collection('quiz').doc('DoJaFWISWLWXAfR9TpZZ').get();
+      //console.log(users);
+    };
+    loadQuiz();
+  }, [i]);
 
   const onSave = () => {
+    //console.log(value);
     i === 0 ? setI(1) : setI(0);
-    if (value === data[i].certa) {
+    if (value === certa) {
       console.log('correta');
     } else {
       console.log('incorreta');
@@ -46,33 +49,13 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textAsk}>{data[i].pergunta}</Text>
+      <Text style={styles.textAsk}>{question}</Text>
       <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
-        <RadioButton.Item
-          labelStyle={styles.textAnswer}
-          label={data[i].resposta[0]}
-          value="a"
-        />
-        <RadioButton.Item
-          labelStyle={styles.textAnswer}
-          label={data[i].resposta[1]}
-          value="b"
-        />
-        <RadioButton.Item
-          labelStyle={styles.textAnswer}
-          label={data[i].resposta[2]}
-          value="c"
-        />
-        <RadioButton.Item
-          labelStyle={styles.textAnswer}
-          label={data[i].resposta[3]}
-          value="d"
-        />
-        <RadioButton.Item
-          labelStyle={styles.textAnswer}
-          label={data[i].resposta[4]}
-          value="e"
-        />
+        <RadioButton.Item labelStyle={styles.textAnswer} label={a} value="a" />
+        <RadioButton.Item labelStyle={styles.textAnswer} label={b} value="b" />
+        <RadioButton.Item labelStyle={styles.textAnswer} label={c} value="c" />
+        <RadioButton.Item labelStyle={styles.textAnswer} label={d} value="d" />
+        <RadioButton.Item labelStyle={styles.textAnswer} label={e} value="e" />
       </RadioButton.Group>
       <Button mode="contained" onPress={onSave}>
         Avançar
