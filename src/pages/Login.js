@@ -22,7 +22,7 @@ const Login = ({navigation}) => {
       .then(() => {
         console.log('User added!');
       });
-    //navigation.navigate('Quiz');
+    navigation.navigate('Quiz', {name: name});
   };
 
   return (

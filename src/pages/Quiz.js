@@ -4,9 +4,11 @@ import {RadioButton, Button} from 'react-native-paper';
 
 import firestore from '@react-native-firebase/firestore';
 
-const Quiz = () => {
+const Quiz = ({route}) => {
+  const {name} = route.params;
+  //console.log('QUIZ :: ' + name);
   const [value, setValue] = useState('');
-  //const [pontos, setPontos] = useState(0);
+  const [pontos, setPontos] = useState(0);
   const [i, setI] = useState(0);
   const [question, setQuestion] = useState('');
   const [a, setA] = useState('');
@@ -37,14 +39,26 @@ const Quiz = () => {
     loadQuiz();
   }, [i]);
 
-  const onSave = () => {
-    //console.log(value);
+  const onSave = async () => {
+    console.log(pontos);
     i === 9 ? setI(0) : setI(i + 1);
+
     if (value === certa) {
       console.log('correta');
+      setPontos(pontos + 1);
     } else {
       console.log('incorreta');
     }
+    console.log('ONSAVE :: ' + pontos);
+    firestore()
+      .collection('Alunos')
+      .doc(name)
+      .update({
+        pontos,
+      })
+      .then(() => {
+        console.log('User updated!');
+      });
   };
 
   return (
