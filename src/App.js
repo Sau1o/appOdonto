@@ -39,7 +39,7 @@ const App = () => {
 
   const onSave = () => {
     //console.log(value);
-    i === 0 ? setI(1) : setI(0);
+    i === 9 ? setI(0) : setI(i + 1);
     if (value === certa) {
       console.log('correta');
     } else {
@@ -49,6 +49,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
+      <Text>{i}</Text>
       <Text style={styles.textAsk}>{question}</Text>
       <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
         <RadioButton.Item labelStyle={styles.textAnswer} label={a} value="a" />
