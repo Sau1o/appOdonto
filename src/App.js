@@ -49,7 +49,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <Text>{i}</Text>
+      <Text style={styles.textQuestion}>Questão {i + 1}</Text>
       <Text style={styles.textAsk}>{question}</Text>
       <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
         <RadioButton.Item labelStyle={styles.textAnswer} label={a} value="a" />
@@ -69,6 +69,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  textQuestion: {
+    fontSize: 28,
+    color: 'red',
   },
   textAsk: {
     fontSize: 24,
