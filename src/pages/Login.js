@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 import {TextInput, Button} from 'react-native-paper';
 
@@ -8,6 +8,11 @@ import {TextInput, Button} from 'react-native-paper';
 const Login = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+
+  const newGame = () => {
+    console.log('NewGame :: ' + name + ' ' + email);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
@@ -30,12 +35,13 @@ const Login = () => {
           onChangeText={text => setEmail(text)}
         />
 
-        <Button
-          mode="contained"
-          onPress={() => console.log('Pressed')}
-          color="#2980b9">
+        <Button mode="contained" onPress={newGame} color="#2980b9">
           Iniciar o Jogo
         </Button>
+
+        <TouchableOpacity style={styles.buttonAdm} onPress={() => {}}>
+          <Text style={styles.textAdm}>Clique aqui para abrir uma sala</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -63,6 +69,13 @@ const styles = StyleSheet.create({
   },
   inputName: {
     marginBottom: 5,
+  },
+  buttonAdm: {
+    marginTop: 15,
+    alignItems: 'center',
+  },
+  textAdm: {
+    color: 'white',
   },
 });
 
