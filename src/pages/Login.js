@@ -3,14 +3,26 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 import {TextInput, Button} from 'react-native-paper';
 
-//import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  const newGame = () => {
-    console.log('NewGame :: ' + name + ' ' + email);
+  const newGame = async () => {
+    //console.log('NewGame :: ' + name + ' ' + email);
+    firestore()
+      .collection('Alunos')
+      .doc(name)
+      .set({
+        name,
+        email,
+        pontos: 0,
+      })
+      .then(() => {
+        console.log('User added!');
+      });
+    //navigation.navigate('Quiz');
   };
 
   return (
@@ -65,7 +77,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   form: {
-    flex: 1,
+    flex: 1.5,
   },
   inputName: {
     marginBottom: 5,
