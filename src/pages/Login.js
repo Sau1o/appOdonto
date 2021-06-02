@@ -51,7 +51,11 @@ const Login = ({navigation}) => {
           Iniciar o Jogo
         </Button>
 
-        <TouchableOpacity style={styles.buttonAdm} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.buttonAdm}
+          onPress={() => {
+            navigation.navigate('Control');
+          }}>
           <Text style={styles.textAdm}>Clique aqui para abrir uma sala</Text>
         </TouchableOpacity>
       </View>
