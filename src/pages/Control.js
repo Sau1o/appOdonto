@@ -3,14 +3,28 @@ import {View, StyleSheet} from 'react-native';
 
 import {TextInput, Button} from 'react-native-paper';
 
-//import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 const Control = ({navigation}) => {
+  //const pass = 'OdontoApp2021';
+  const pass = '123';
   const [password, setPassword] = useState('');
   const [nameRoom, setNameRoom] = useState('');
 
-  const startGame = () => {
-    console.log(`startGame :: senha: ${password}, sala: ${nameRoom}`);
+  const startGame = async () => {
+    //console.log(`startGame :: senha: ${password}, sala: ${nameRoom}`);
+    if (password === pass) {
+      firestore()
+        .collection('sala')
+        .doc(nameRoom)
+        .set({})
+        .then(() => {
+          console.log('User added!');
+        });
+    } else {
+      // eslint-disable-next-line no-alert
+      alert('Senha incorreta, tente novamente');
+    }
   };
 
   return (
