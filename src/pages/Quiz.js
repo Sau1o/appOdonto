@@ -4,7 +4,7 @@ import {RadioButton, Button} from 'react-native-paper';
 
 import firestore from '@react-native-firebase/firestore';
 
-const Quiz = ({route}) => {
+const Quiz = ({route, navigation}) => {
   const {name, nameRoom} = route.params;
   //console.log('QUIZ :: ' + name);
   const [value, setValue] = useState('');
@@ -41,25 +41,30 @@ const Quiz = ({route}) => {
   }, [i]);
 
   const onSave = async () => {
-    console.log(pontos);
-    i === 9 ? setI(0) : setI(i + 1);
-
-    if (value === certa) {
-      console.log('correta');
-      setPontos(pontos + 1);
+    if (i === 9) {
+      console.log('ONSAVE :: ' + pontos);
+      // eslint-disable-next-line no-alert
+      alert(`${name} você fez ${pontos}/10`);
+      firestore()
+        .collection('Alunos')
+        .doc(name)
+        .update({
+          pontos,
+        })
+        .then(() => {
+          console.log('User updated!');
+        });
+      navigation.goBack();
     } else {
-      console.log('incorreta');
+      setI(i + 1);
+      if (value === certa) {
+        console.log('correta');
+        setPontos(pontos + 1);
+      } else {
+        console.log('incorreta');
+      }
     }
-    console.log('ONSAVE :: ' + pontos);
-    firestore()
-      .collection('Alunos')
-      .doc(name)
-      .update({
-        pontos,
-      })
-      .then(() => {
-        console.log('User updated!');
-      });
+    console.log(`ONSAVE :: pontos=${pontos}`);
   };
 
   return (
