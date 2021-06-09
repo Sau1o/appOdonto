@@ -32,16 +32,21 @@ const Quiz = ({route, navigation}) => {
       setD(user.d);
       setE(user.e);
       setCerta(user.certa);
-      //console.log(user.certa);
-      //const users = await firestore().collection('quiz').doc('DoJaFWISWLWXAfR9TpZZ').get();
-      //console.log(users);
     };
     loadQuiz();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i]);
+  }, [i, setPontos]);
 
   const onSave = async () => {
-    if (i === 9) {
+    if (i <= 9) {
+      setI(i + 1);
+      if (value === certa) {
+        console.log('correta');
+        setPontos(pontos + 1);
+      } else {
+        console.log('incorreta');
+      }
+    } else {
       console.log('ONSAVE :: ' + pontos);
       // eslint-disable-next-line no-alert
       alert(`${name} você fez ${pontos}/10`);
@@ -55,16 +60,8 @@ const Quiz = ({route, navigation}) => {
           console.log('User updated!');
         });
       navigation.goBack();
-    } else {
-      setI(i + 1);
-      if (value === certa) {
-        console.log('correta');
-        setPontos(pontos + 1);
-      } else {
-        console.log('incorreta');
-      }
     }
-    console.log(`ONSAVE :: pontos=${pontos}`);
+    console.log(`Tela: ${i}`);
   };
 
   return (
@@ -81,6 +78,9 @@ const Quiz = ({route, navigation}) => {
       <Button mode="contained" onPress={onSave}>
         Avançar
       </Button>
+      <Text>
+        {pontos}/{i}
+      </Text>
     </View>
   );
 };
