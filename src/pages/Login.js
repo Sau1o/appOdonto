@@ -8,21 +8,27 @@ import firestore from '@react-native-firebase/firestore';
 const Login = ({navigation}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [nameRoom, setNameRoom] = useState('');
 
   const newGame = async () => {
     //console.log('NewGame :: ' + name + ' ' + email);
-    firestore()
-      .collection('Alunos')
-      .doc(name)
-      .set({
-        name,
-        email,
-        pontos: 0,
-      })
-      .then(() => {
-        console.log('User added!');
-      });
-    navigation.navigate('Quiz', {name: name});
+    if (nameRoom !== '' && name !== '' && email !== '') {
+      firestore()
+        .collection('Alunos')
+        .doc(name)
+        .set({
+          name,
+          email,
+          pontos: 0,
+        })
+        .then(() => {
+          console.log('User added!');
+        });
+      navigation.navigate('Quiz', {name: name, nameRoom: nameRoom});
+    } else {
+      // eslint-disable-next-line no-alert
+      alert('Preencha todos os campos');
+    }
   };
 
   return (
@@ -45,6 +51,13 @@ const Login = ({navigation}) => {
           label="Email"
           value={email}
           onChangeText={text => setEmail(text)}
+        />
+
+        <TextInput
+          style={styles.inputName}
+          label="Nome da Sala"
+          value={nameRoom}
+          onChangeText={text => setNameRoom(text)}
         />
 
         <Button mode="contained" onPress={newGame} color="#2980b9">

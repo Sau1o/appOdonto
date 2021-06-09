@@ -5,7 +5,7 @@ import {RadioButton, Button} from 'react-native-paper';
 import firestore from '@react-native-firebase/firestore';
 
 const Quiz = ({route}) => {
-  const {name} = route.params;
+  const {name, nameRoom} = route.params;
   //console.log('QUIZ :: ' + name);
   const [value, setValue] = useState('');
   const [pontos, setPontos] = useState(0);
@@ -20,7 +20,7 @@ const Quiz = ({route}) => {
 
   useEffect(() => {
     const loadQuiz = async () => {
-      const users = await firestore().collection('teste').get();
+      const users = await firestore().collection(nameRoom).get();
       const user = {...users.docs[i].data()};
       //console.log(user);
       setValue('');
@@ -37,6 +37,7 @@ const Quiz = ({route}) => {
       //console.log(users);
     };
     loadQuiz();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i]);
 
   const onSave = async () => {
