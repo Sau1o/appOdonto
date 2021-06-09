@@ -11,30 +11,37 @@ const Control = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [nameRoom, setNameRoom] = useState('');
 
+  const sortAsks = () => {
+    const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    var i, j, k;
+
+    for (i = array.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * i);
+      k = array[i];
+      array[i] = array[j];
+      array[j] = k;
+    }
+    return array.slice(0, 10);
+  };
+
   const startGame = async () => {
     //console.log(`startGame :: senha: ${password}, sala: ${nameRoom}`);
     if (password === pass) {
-      /*firestore()
-        .collection('sala')
-        .doc(nameRoom)
-        .set({})
-        .then(() => {
-          console.log('User added!');
-        });*/
-      //const users = await firestore().collection('quiz').get();
-      //const user = {...users.docs[1].data()};
+      const indices = sortAsks();
+      //console.log(`startGame :: ${indices}`);
+      const asks = await firestore().collection('quiz').get();
+      //const ask = {...asks.docs[1].data()};
       //console.log(user);
-
-      const array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-      var i, j, k;
-
-      for (i = array.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * i);
-        k = array[i];
-        array[i] = array[j];
-        array[j] = k;
+      for (var i = 0; i <= 9; i++) {
+        //console.log(indices[i]);
+        firestore()
+          .collection(nameRoom)
+          //.doc(nameRoom)
+          .add({...asks.docs[indices[i]].data()})
+          .then(() => {
+            //console.log(`Ask ${i} added!`);
+          });
       }
-      console.log(array.slice(0, 10));
     } else {
       // eslint-disable-next-line no-alert
       alert('Senha incorreta, tente novamente');

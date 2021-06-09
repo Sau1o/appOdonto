@@ -20,7 +20,7 @@ const Quiz = ({route}) => {
 
   useEffect(() => {
     const loadQuiz = async () => {
-      const users = await firestore().collection('quiz').get();
+      const users = await firestore().collection('teste').get();
       const user = {...users.docs[i].data()};
       //console.log(user);
       setValue('');
