@@ -34,23 +34,28 @@ const Quiz = ({route, navigation}) => {
       setCerta(user.certa);
     };
     loadQuiz();
+    firestore()
+      .collection('Alunos')
+      .doc(name)
+      .update({
+        pontos,
+      })
+      .then(() => {
+        console.log('User updated!');
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i, setPontos]);
+  }, [pontos, i]);
 
   const onSave = async () => {
+    value === certa ? setPontos(pontos + 1) : '';
+    console.log(`Pontos = ${pontos}`);
     if (i < 9) {
       setI(i + 1);
-      if (value === certa) {
-        console.log('correta');
-        setPontos(pontos + 1);
-      } else {
-        console.log('incorreta');
-      }
     } else {
       console.log('ONSAVE :: ' + pontos);
       // eslint-disable-next-line no-alert
       alert(`${name} você fez ${pontos}/10`);
-      firestore()
+      /*firestore()
         .collection('Alunos')
         .doc(name)
         .update({
@@ -58,7 +63,7 @@ const Quiz = ({route, navigation}) => {
         })
         .then(() => {
           console.log('User updated!');
-        });
+        });*/
       navigation.navigate('Scores');
     }
     //console.log(`Tela: ${i}`);

@@ -23,8 +23,8 @@ const Login = ({navigation}) => {
         })
         .then(() => {
           console.log('User added!');
+          navigation.navigate('Quiz', {name: name, nameRoom: nameRoom});
         });
-      navigation.navigate('Quiz', {name: name, nameRoom: nameRoom});
     } else {
       // eslint-disable-next-line no-alert
       alert('Preencha todos os campos');
