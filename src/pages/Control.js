@@ -42,6 +42,7 @@ const Control = ({navigation}) => {
             //console.log(`Ask ${i} added!`);
           });
       }
+      navigation.navigate('Scores');
     } else {
       // eslint-disable-next-line no-alert
       alert('Senha incorreta, tente novamente');

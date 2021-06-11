@@ -38,7 +38,7 @@ const Quiz = ({route, navigation}) => {
   }, [i, setPontos]);
 
   const onSave = async () => {
-    if (i <= 9) {
+    if (i < 9) {
       setI(i + 1);
       if (value === certa) {
         console.log('correta');
@@ -59,9 +59,9 @@ const Quiz = ({route, navigation}) => {
         .then(() => {
           console.log('User updated!');
         });
-      navigation.goBack();
+      navigation.navigate('Scores');
     }
-    console.log(`Tela: ${i}`);
+    //console.log(`Tela: ${i}`);
   };
 
   return (
