@@ -37,7 +37,6 @@ const Login = ({navigation}) => {
         <Text style={styles.textLogo}>QUIZ</Text>
         <Text style={styles.textLogo}>ODONTO</Text>
       </View>
-
       <View style={styles.form}>
         <TextInput
           style={styles.inputName}
