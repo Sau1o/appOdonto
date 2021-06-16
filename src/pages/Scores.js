@@ -7,6 +7,7 @@ import firestore from '@react-native-firebase/firestore';
 
 const Scores = () => {
   const [scores, setScores] = React.useState([]);
+  //const [pos, setPos] = React.useState(0);
   const newGame = async () => {
     let querySnapshot;
     querySnapshot = await firestore()
@@ -17,12 +18,14 @@ const Scores = () => {
     var entries = querySnapshot.docs.map(documentSnapshot =>
       documentSnapshot.data(),
     );
-    console.log('newGame :: ', entries);
+    //console.log('newGame :: ', entries);
     //return entries;
     setScores(entries);
   };
 
   console.log('Scores', scores);
+
+  //console.log(scores.findIndex(pos => scores.name === 'oito'));
 
   return (
     <View>
@@ -34,7 +37,9 @@ const Scores = () => {
         keyExtractor={item => item.name}
         renderItem={({item}) => (
           <View>
-            <Text>{item.name}</Text>
+            <Text>
+              {scores.findIndex(scores => scores.name === item.name) + 1}
+            </Text>
           </View>
         )}
       />
