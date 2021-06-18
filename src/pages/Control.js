@@ -34,7 +34,7 @@ const Control = ({navigation}) => {
       //console.log(user);
       for (var i = 0; i <= 9; i++) {
         //console.log(indices[i]);
-        firestore()
+        await firestore()
           .collection(nameRoom)
           //.doc(nameRoom)
           .add({...asks.docs[indices[i]].data()})

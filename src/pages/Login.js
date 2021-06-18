@@ -13,7 +13,7 @@ const Login = ({navigation}) => {
   const newGame = async () => {
     //console.log('NewGame :: ' + name + ' ' + email);
     if (nameRoom !== '' && name !== '' && email !== '') {
-      firestore()
+      await firestore()
         .collection('Alunos')
         .doc(name)
         .set({
