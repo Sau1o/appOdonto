@@ -37,12 +37,12 @@ const Control = ({navigation}) => {
         await firestore()
           .collection(nameRoom)
           //.doc(nameRoom)
-          .add({...asks.docs[indices[i]].data()})
-          .then(() => {
-            //console.log(`Ask ${i} added!`);
-          });
+          .add({...asks.docs[indices[i]].data()});
+        //.then(() => {
+        //console.log(`Ask ${i} added!`);
+        //});
       }
-      navigation.navigate('Scores');
+      navigation.navigate('Scores', {isAdm: true});
     } else {
       // eslint-disable-next-line no-alert
       alert('Senha incorreta, tente novamente');

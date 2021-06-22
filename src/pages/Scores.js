@@ -1,27 +1,33 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, FlatList, Text, StyleSheet} from 'react-native';
 
 import {Button} from 'react-native-paper';
 
 import firestore from '@react-native-firebase/firestore';
 
-const Scores = () => {
-  const [scores, setScores] = React.useState([]);
+const Scores = ({route}) => {
+  const {isAdm} = route.params;
+  //console.log('Scores :: ', isAdm);
+  const [scores, setScores] = useState([]);
   //const [pos, setPos] = React.useState(0);
-  const newGame = async () => {
-    let querySnapshot;
-    querySnapshot = await firestore()
-      .collection('Alunos')
-      .orderBy('pontos', 'desc')
-      .get();
 
-    var entries = querySnapshot.docs.map(documentSnapshot =>
-      documentSnapshot.data(),
-    );
-    //console.log('newGame :: ', entries);
-    //return entries;
-    setScores(entries);
-  };
+  useEffect(() => {
+    const newGame = async () => {
+      let querySnapshot;
+      querySnapshot = await firestore()
+        .collection('Alunos')
+        .orderBy('pontos', 'desc')
+        .get();
+
+      var entries = querySnapshot.docs.map(documentSnapshot =>
+        documentSnapshot.data(),
+      );
+      //console.log('newGame :: ', entries);
+      //return entries;
+      setScores(entries);
+    };
+    newGame();
+  }, [scores]);
 
   //console.log('Scores', scores);
 
@@ -29,10 +35,6 @@ const Scores = () => {
 
   return (
     <View>
-      <Button mode="contained" onPress={newGame} color="#2980b9">
-        Iniciar o Jogo
-      </Button>
-
       <View style={styles.container}>
         <Text style={styles.text}>Pos</Text>
 
@@ -42,7 +44,6 @@ const Scores = () => {
 
         <Text style={styles.text}>Pontos</Text>
       </View>
-
       <FlatList
         data={scores}
         keyExtractor={item => item.name}
@@ -60,6 +61,12 @@ const Scores = () => {
           </View>
         )}
       />
+      <Button
+        mode="contained"
+        onPress={() => console.log('Pressed')}
+        disabled={isAdm ? false : true}>
+        Press me
+      </Button>
     </View>
   );
 };
