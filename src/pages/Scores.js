@@ -23,7 +23,7 @@ const Scores = () => {
     setScores(entries);
   };
 
-  console.log('Scores', scores);
+  //console.log('Scores', scores);
 
   //console.log(scores.findIndex(pos => scores.name === 'oito'));
 
@@ -34,13 +34,13 @@ const Scores = () => {
       </Button>
 
       <View style={styles.container}>
-        <Text style={styles.itemPos}>Pos</Text>
+        <Text style={styles.text}>Pos</Text>
 
-        <Text style={styles.itemName}>Nome</Text>
+        <Text style={styles.text}>Nome</Text>
 
-        <Text style={styles.itemMail}>Email</Text>
+        <Text style={styles.text}>Email</Text>
 
-        <Text style={styles.itemPontos}>Pontos</Text>
+        <Text style={styles.text}>Pontos</Text>
       </View>
 
       <FlatList
@@ -48,15 +48,15 @@ const Scores = () => {
         keyExtractor={item => item.name}
         renderItem={({item}) => (
           <View style={styles.containerItem}>
-            <Text style={styles.itemPos}>
+            <Text style={styles.text}>
               {scores.findIndex(scores => scores.name === item.name) + 1}
             </Text>
 
-            <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={styles.text}>{item.name}</Text>
 
-            <Text style={styles.itemMail}>{item.email}</Text>
+            <Text style={styles.text}>{item.email}</Text>
 
-            <Text style={styles.itemPontos}>{item.pontos}</Text>
+            <Text style={styles.text}>{item.pontos}</Text>
           </View>
         )}
       />
@@ -68,15 +68,24 @@ const styles = StyleSheet.create({
   container: {
     //flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerItem: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
-  itemPos: {flex: 1},
-  itemName: {flex: 1},
-  itemMail: {flex: 1},
-  itemPontos: {flex: 1},
+  text: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 18,
+    borderBottomWidth: 1,
+    marginBottom: 10,
+    textAlignVertical: 'center',
+    borderTopWidth: 1,
+  },
 });
 
 export default Scores;
